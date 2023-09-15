@@ -19,9 +19,14 @@ const getPodcast = async (podcastId) => {
     "audioSrc": data.attributes.field_buzzsprout_link.uri,
     "imageSrc": podcastImageUrl.data.attributes.uri.url,
     "imageName": podcastImage.data.attributes.name,
-    "imageAlt": podcastImage.data.attributes.alt,
+    "imageAlt": podcastImage.data.relationships.thumbnail.data.meta.alt,
     "text": data.attributes.body.value,
-    "transcript": data.attributes.field_transcript.value
+    "transcript": data.attributes.field_transcript.value,
+    "episodeNumber": data.attributes.field_episode_num,
+    "googleSrc": data.attributes.field_google_play.uri,
+    "appleSrc": data.attributes.field_apple_podcast.uri,
+    "spotifySrc": data.attributes.field_spotify.uri,
+    "summary": data.attributes.body.summary
   }
   return podcast;
 }

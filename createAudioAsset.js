@@ -7,8 +7,8 @@ import FormData from "form-data";
 
 const createAudioAsset = async (url) => {
   let postedImageUrl;
-  const accessToken = "K6RW2uEVajTs0xXun1xdqQtt-197404-Uiag6Ka65eivh8S-uvdd";
-  const spaceId = "230321";
+  const accessToken = "XCxYGfTmbLr4K6NoRlPU9Qtt-197404-RQGmbyxi7akqxxZ37hsX";
+  const spaceId = "229922";
 
   // Folder where image will be saved to.
   const folderName = "./audio";
@@ -50,7 +50,7 @@ const createAudioAsset = async (url) => {
         `https://api.storyblok.com/v1/spaces/${spaceId}/assets`,
         {
           filename: imageName,
-          asset_folder_id: 249307,
+          asset_folder_id: 285871,
           title: path.parse(imageName).name,
           alt: path.parse(imageName).name,
         },

@@ -1,31 +1,18 @@
 import createArticle from "./done-version.js";
 import jsonData from "./allBlogPosts.json" assert { type: "json" };
+import getAllBlogPosts from "./getAllBlogPosts.js";
 
-// async function processEntry(entry) {
-//   await createArticle(entry);
-// }
-
-// async function processJsonData() {
-//   for (let index = 0; index < jsonData.data.length; index++) {
-//     await processEntry(jsonData.data[index]);
-//   }
-// }
-
-// processJsonData()
-//   .then(() => {
-//     console.log("All entries processed successfully");
-//   })
-//   .catch((error) => {
-//     console.error("An error occurred while processing entries:", error);
-//   });
-
+const blogs = await getAllBlogPosts();
 
 async function processEntry(entry) {
   await createArticle(entry);
 }
 
 async function processJsonData() {
-  await processEntry(jsonData.data[0]);
+  for (let index = 21; index < blogs.length; index++) {
+    console.log("[MIGRATION_INDEX]", index);
+    await processEntry(blogs[index]);
+  }
 }
 
 processJsonData()
@@ -35,3 +22,20 @@ processJsonData()
   .catch((error) => {
     console.error("An error occurred while processing entries:", error);
   });
+
+
+// async function processEntry(entry) {
+//   await createArticle(entry);
+// }
+
+// async function processJsonData() {
+//   await processEntry(blogs[1]);
+// }
+
+// processJsonData()
+//   .then(() => {
+//     console.log("All entries processed successfully");
+//   })
+//   .catch((error) => {
+//     console.error("An error occurred while processing entries:", error);
+//   });

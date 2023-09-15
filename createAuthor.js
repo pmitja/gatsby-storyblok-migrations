@@ -10,8 +10,8 @@ import https from "https";
 const createAuthor = async (id) => {
   let postedImageUrl;
 
-  const accessToken = "K6RW2uEVajTs0xXun1xdqQtt-197404-Uiag6Ka65eivh8S-uvdd";
-  const spaceId = "230321";
+  const accessToken = "l6x9OIC4JIHRuGcGR6c2VAtt-197404-i7kfRwgsbaYyCaJU8Lfd";
+  const spaceId = "241242";
 
   const folderName = "./images";
   const __filename = fileURLToPath(import.meta.url);
@@ -31,7 +31,7 @@ const createAuthor = async (id) => {
   }
 
   const Storyblok = new StoryblokClient({
-    oauthToken: "K6RW2uEVajTs0xXun1xdqQtt-197404-Uiag6Ka65eivh8S-uvdd",
+    oauthToken: "l6x9OIC4JIHRuGcGR6c2VAtt-197404-i7kfRwgsbaYyCaJU8Lfd",
   });
 
   const saveImageToFolder = async (imageUrl, filePath) => {
@@ -54,14 +54,14 @@ const createAuthor = async (id) => {
     });
   };
 
-  const createAssetInStoryblok = async (accessToken, spaceId, imageName) => {
+  const createAssetInStoryblok = async (accessToken, spaceId, imageName, alt) => {
     try {
       const response = await axios.post(
         `https://api.storyblok.com/v1/spaces/${spaceId}/assets`,
         {
           filename: imageName,
           size: "400x500",
-          asset_folder_id: null,
+          asset_folder_id: 286421,
           title: path.parse(imageName).name,
           alt: path.parse(imageName).name,
         },
@@ -136,11 +136,13 @@ const createAuthor = async (id) => {
     const filePath = path.join(folderPath, fileName);
     await saveImageToFolder(imageUrl, filePath);
   
+    const alt = `${authorData.data.attributes.title}, ${authorData.data.attributes.field_team_member_position}`;
   
     const assetData = await createAssetInStoryblok(
       accessToken,
       spaceId,
-      imageName
+      imageName,
+      alt
     );
   
     postedImageUrl = await uploadImageToStoryblok(
@@ -156,19 +158,23 @@ const createAuthor = async (id) => {
     const slug = replaceSpecialChars(authorData.data.attributes.title);
     console.log(slug);
 
-    await Storyblok.post("spaces/230321/stories/", {
+    await Storyblok.post("spaces/241242/stories/", {
       story: {
         name: authorData.data.attributes.title,
         slug: id,
         content: {
-          component: "author",
+          component: "teamMember",
           name: authorData.data.attributes.title,
+          position: authorData.data.attributes.field_team_member_position,
           authorId: id,
           image: {
-            filename: `https://a.storyblok.com/${postedImageUrl}`
+            filename: `https://a.storyblok.com/${postedImageUrl}`,
+            fieldtype: "asset",
+            name: authorImage.data.attributes.title,
+            alt: authorImage.data.attributes.alt
           },
         },
-        parent_id: "316932216",
+        parent_id: "350133011",
       },
     });
 

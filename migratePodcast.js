@@ -10,7 +10,7 @@ async function processEntry(entry) {
 
 
 async function processJsonData() {
-  for (let index = 0; index < 11; index++) {
+  for (let index = 0; index < podcasts.length; index++) {
     await processEntry(podcasts[index].id);
   }
 }
@@ -28,7 +28,7 @@ processJsonData()
 // }
 
 // async function processJsonData() {
-//   await processEntry(podcasts[1].id);
+//   await processEntry(podcasts[0].id);
 // }
 
 // processJsonData()

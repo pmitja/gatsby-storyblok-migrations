@@ -24,6 +24,7 @@
     "request": "^2.88.2",
     "storyblok-js-client": "^2.5.2",
     "storyblok-markdown-richtext": "^1.0.3",
+    "truncate-utf8-bytes": "^1.0.2",
     "turndown": "^7.1.2",
     "uuid": "^8.0.0"
   }

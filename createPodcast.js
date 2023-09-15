@@ -13,8 +13,8 @@ import TurndownService from "turndown";
 const createPodcast = async (id) => {
   let postedImageUrl;
 
-  const accessToken = "K6RW2uEVajTs0xXun1xdqQtt-197404-Uiag6Ka65eivh8S-uvdd";
-  const spaceId = "230321";
+  const accessToken = "l6x9OIC4JIHRuGcGR6c2VAtt-197404-i7kfRwgsbaYyCaJU8Lfd";
+  const spaceId = "241242";
 
   const folderName = "./images";
   const __filename = fileURLToPath(import.meta.url);
@@ -35,7 +35,7 @@ const createPodcast = async (id) => {
   const turndownService = new TurndownService();
 
   const Storyblok = new StoryblokClient({
-    oauthToken: "K6RW2uEVajTs0xXun1xdqQtt-197404-Uiag6Ka65eivh8S-uvdd",
+    oauthToken: "l6x9OIC4JIHRuGcGR6c2VAtt-197404-i7kfRwgsbaYyCaJU8Lfd",
   });
 
   const saveImageToFolder = async (imageUrl, filePath) => {
@@ -65,7 +65,7 @@ const createPodcast = async (id) => {
         {
           filename: imageName,
           size: "400x500",
-          asset_folder_id: null,
+          asset_folder_id: 286431,
           title: path.parse(imageName).name,
           alt: path.parse(imageName).name,
         },
@@ -133,7 +133,7 @@ const createPodcast = async (id) => {
       imageName
     );
 
-    await Storyblok.post("spaces/230321/stories/", {
+    await Storyblok.post("spaces/241242/stories/", {
       story: {
         name: podcastData.title,
         slug: podcastData.slug.replace("/podcast/", ""),
@@ -151,8 +151,22 @@ const createPodcast = async (id) => {
             name: podcastData.imageName,
             alt: podcastData.imageAlt
           },
+          googleSrc: podcastData.googleSrc,
+          appleSrc: podcastData.appleSrc,
+          spotifySrc: podcastData.spotifySrc,
+          seo: {
+            title: `${podcastData.title} • Agiledrop`,
+            twitter_title: `${podcastData.title} • Agiledrop`,
+            og_title: `${podcastData.title} • Agiledrop`,
+            og_description: podcastData.summary,
+            twitter_description: podcastData.summary,
+            description: podcastData.summary,
+            og_image: `https://a.storyblok.com/${postedImageUrl}`,
+            twitter_image: `https://a.storyblok.com/${postedImageUrl}`,
+            "plugin": "seo_metatags",
+          }
         },
-        parent_id: "319959750",
+        parent_id: "350140404",
       },
     });
 
