@@ -2,11 +2,11 @@ import StoryblokClient from "storyblok-js-client";
 
 const getAuthorData = async (slug) => {
   const Storyblok = new StoryblokClient({
-    oauthToken: "l6x9OIC4JIHRuGcGR6c2VAtt-197404-i7kfRwgsbaYyCaJU8Lfd",
+    oauthToken: "e98BbkO3NT7NaGADlXOarQtt-197404-yMYPxznXVzkzxzrg_eJc",
   });
 
   const { data } = await Storyblok.get("spaces/229922/stories", {
-    with_slug: `team/${slug}`,
+    with_slug: `team-folder/${slug}`,
   });
 
   return data;

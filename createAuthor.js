@@ -1,4 +1,4 @@
-import jsonData from "./allBlogPosts.json" assert { type: "json" };
+// import jsonData from "./allBlogPosts.json" assert { type: "json" };
 import StoryblokClient from "storyblok-js-client";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -6,13 +6,14 @@ import axios from "axios";
 import FormData from "form-data";
 import fs from "fs";
 import https from "https";
+import jsonData from "./JakaScripts/data/authorsData.json" assert { type: "json" };
 
 const createAuthor = async (id) => {
   let postedImageUrl;
 
-  const accessToken = "l6x9OIC4JIHRuGcGR6c2VAtt-197404-i7kfRwgsbaYyCaJU8Lfd";
-  const spaceId = "241242";
-
+  const accessToken = "uGTf6gvzWVrGG7q8zervUgtt-197404-MYhbxsvoec3vKtLy7Gd-";
+  const spaceId = "229922";
+  
   const folderName = "./images";
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
@@ -31,7 +32,7 @@ const createAuthor = async (id) => {
   }
 
   const Storyblok = new StoryblokClient({
-    oauthToken: "l6x9OIC4JIHRuGcGR6c2VAtt-197404-i7kfRwgsbaYyCaJU8Lfd",
+    oauthToken: accessToken,
   });
 
   const saveImageToFolder = async (imageUrl, filePath) => {
@@ -61,7 +62,7 @@ const createAuthor = async (id) => {
         {
           filename: imageName,
           size: "400x500",
-          asset_folder_id: 286421,
+          asset_folder_id: 281474,
           title: path.parse(imageName).name,
           alt: path.parse(imageName).name,
         },
@@ -119,24 +120,25 @@ const createAuthor = async (id) => {
   };
 
   try {
-    const authorData = await fetchDataFromURL(
-      `https://www.agiledrop.com/jsonapi/node/team_member/${id}`
-    );
-    const mediaFiledImage = await fetchDataFromURL(
-      `https://www.agiledrop.com/jsonapi/media/image/${authorData.data.relationships.field_team_member_photo.data.id}?include=field_media_image`
-    );
-    const authorImage = await fetchDataFromURL(
-      `https://www.agiledrop.com/jsonapi/file/file/${mediaFiledImage.data.relationships.field_media_image.data.id}`
-    );
+    // const authorData = await fetchDataFromURL(
+    //   `https://www.agiledrop.com/jsonapi/node/team_member/${id}`
+    // );
+    // const mediaFiledImage = await fetchDataFromURL(
+    //   `https://www.agiledrop.com/jsonapi/media/image/${authorData.data.relationships.field_team_member_photo.data.id}?include=field_media_image`
+    // );
+    // const authorImage = await fetchDataFromURL(
+    //   `https://www.agiledrop.com/jsonapi/file/file/${mediaFiledImage.data.relationships.field_media_image.data.id}`
+    // );
   
-    const imageUrl = `https://www.agiledrop.com${authorImage.data.attributes.uri.url}`;
+    if (jsonData[id].photo.id !== 54) {
+    const imageUrl = `https://www.agiledrop.com${jsonData[id].photo.url}`;
   
-    const imageName = authorImage.data.attributes.filename;
+    const imageName = jsonData[id].name + "-" + jsonData[id].photo.id + '.jpg';
     const fileName = path.basename(imageUrl);
     const filePath = path.join(folderPath, fileName);
     await saveImageToFolder(imageUrl, filePath);
   
-    const alt = `${authorData.data.attributes.title}, ${authorData.data.attributes.field_team_member_position}`;
+    const alt = `${jsonData[id].name} Picture}`;
   
     const assetData = await createAssetInStoryblok(
       accessToken,
@@ -155,28 +157,53 @@ const createAuthor = async (id) => {
       imageName
     );
 
-    const slug = replaceSpecialChars(authorData.data.attributes.title);
-    console.log(slug);
-
-    await Storyblok.post("spaces/241242/stories/", {
+    const slug = replaceSpecialChars(jsonData[id].name);
+    console.log(slug);id
+    await Storyblok.post("spaces/229922/stories/", {
       story: {
-        name: authorData.data.attributes.title,
-        slug: id,
+        name: jsonData[id].name,
+        slug: jsonData[id].id,
         content: {
           component: "teamMember",
-          name: authorData.data.attributes.title,
-          position: authorData.data.attributes.field_team_member_position,
-          authorId: id,
+          name: jsonData[id].name,
+          position: jsonData[id].position.en,
+          positionSi: jsonData[id].position.sl,
+          positionDe: jsonData[id].position.de,
+          includeInTeam: false,
+          authorId: jsonData[id].id,
+          office: jsonData[id].office,
           image: {
             filename: `https://a.storyblok.com/${postedImageUrl}`,
             fieldtype: "asset",
-            name: authorImage.data.attributes.title,
-            alt: authorImage.data.attributes.alt
+            name: imageName,
+            alt: `${jsonData[id].name} Picture}`
           },
         },
-        parent_id: "350133011",
+        parent_id: "344661287",
       },
     });
+  } else {
+    await Storyblok.post("spaces/229922/stories/", {
+      story: {
+        name: jsonData[id].name,
+        slug: jsonData[id].id,
+        content: {
+          component: "teamMember",
+          name: jsonData[id].name,
+          position: jsonData[id].position,
+          includeInTeam: false,
+          authorId: jsonData[id].id,
+          image: {
+            filename: `https://a.storyblok.com/f/229922/240x300/de39279172/unknown.jpg`,
+            fieldtype: "asset",
+            name: "Unknown",
+            alt: `Unknown Picture`
+          },
+        },
+        parent_id: "344661287",
+      },
+    });
+  }
 
     console.log("Done");
   } catch (error) {

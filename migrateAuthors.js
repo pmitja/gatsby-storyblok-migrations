@@ -1,6 +1,6 @@
 import createAuthor from "./createAuthor.js";
 import getAllAuthors from "./getAllAuthors.js";
-
+import jsonData from "./JakaScripts/data/authorsData.json" assert { type: "json" };
 
 const users = await getAllAuthors();
 
@@ -9,8 +9,8 @@ async function processEntry(entry) {
 }
 
 async function processJsonData() {
-  for (let index = 0; index < users.length; index++) {
-    await processEntry(users[index].id);
+  for (let index = 0; index < jsonData.length; index++) {
+    await processEntry(index);
   }
 }
 

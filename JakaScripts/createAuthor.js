@@ -7,14 +7,14 @@ import fs from "fs";
 import axios from 'axios'; // axios is used but not imported
 import FormData from 'form-data'; // FormData is used but not imported
 
-const accessToken = "TyymPz0AyClgLsjm4L13GQtt-209820-Nbotwd-yErC5QUnvb9Ak";
-const spaceId = "253231";
+const accessToken = "uGTf6gvzWVrGG7q8zervUgtt-197404-MYhbxsvoec3vKtLy7Gd-";
+const spaceId = "253696";
 
 const authors = jsonData
 
 
 const Storyblok = new StoryblokClient({
-  accessToken: accessToken, // use the variable defined above
+  oauthToken: accessToken, // use the variable defined above
 });
 
 const createAssetInStoryblok = async (imageName, alt) => {
@@ -24,7 +24,7 @@ const createAssetInStoryblok = async (imageName, alt) => {
       {
         filename: imageName,
         size: "400x500",
-        asset_folder_id: 313241,
+        asset_folder_id: 313917,
         title: imageName.split(".")[0],
         alt: alt,
       },
@@ -118,7 +118,7 @@ const createAuthor = async (author) => {
             alt: imgAlt
           },
         },
-        parent_id: "374409670",
+        parent_id: "375657041",
       },
     });
 

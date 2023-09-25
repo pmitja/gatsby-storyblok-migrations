@@ -3,7 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import axios from "axios"
 
-let rawData = fs.readFileSync("../data/unpublishedData.json")
+let rawData = fs.readFileSync("./data/authorsData.json")
 const authors = JSON.parse(rawData)
 
 // Folder where image will be saved to.

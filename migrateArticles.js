@@ -1,5 +1,4 @@
 import createArticle from "./done-version.js";
-import jsonData from "./allBlogPosts.json" assert { type: "json" };
 import getAllBlogPosts from "./getAllBlogPosts.js";
 
 const blogs = await getAllBlogPosts();
@@ -9,7 +8,7 @@ async function processEntry(entry) {
 }
 
 async function processJsonData() {
-  for (let index = 21; index < blogs.length; index++) {
+  for (let index = 0; index < blogs.length; index++) {
     console.log("[MIGRATION_INDEX]", index);
     await processEntry(blogs[index]);
   }

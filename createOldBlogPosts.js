@@ -167,8 +167,6 @@ const createArticle = async (data) => {
         : "f4c15bf0-f304-46f6-b017-ed9fa41da8f1";
     const date = attributes.created.substring(0, 10);
 
-    console.log(uuid);
-
     let categories = [];
     let tags = [];
 
