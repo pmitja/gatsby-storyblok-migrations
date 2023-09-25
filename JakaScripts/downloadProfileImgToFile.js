@@ -22,10 +22,10 @@ if (!fs.existsSync(folderPath)) {
 }
 
 const saveStreamToFile = (url, filePath) => {
-  
+
 
   // Path where you want to save the downloaded image
-  
+
   axios.get(url, { responseType: 'stream' })
   .then((response) => {
       // Create a write stream to save the image data to a file
@@ -45,20 +45,20 @@ const saveStreamToFile = (url, filePath) => {
     .catch((error) => {
       console.error('Error downloading image:', error);
     });
-    
+
   }
-  
+
   const saveImagesToFile = () => {
-  
+
     authors.forEach(e => {
-  
+
       const imagePath = folderPath + "/" + e.name + "-" + e.photo.id + '.jpg';
       saveStreamToFile(baseUrl + e.photo.url, imagePath)
       console.log(imagePath)
     }
-  
+
     )
-  
-  
+
+
   }
   saveImagesToFile()
